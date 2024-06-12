@@ -56,15 +56,19 @@ for person in allFriends:
         if person != friend:
             compatibility = calculateCompatibility(person, friend)
             allOtherFriends.append((friend, compatibility))
-    friendMap[person] = allOtherFriends    
+    # Reverse sorts by compatibility with person
+    friendMap[person] = sorted(allOtherFriends, reverse=True, key=lambda x: x[1])    
 
 # Printing KV pairs in friendMap
-# for person in friendMap:
-#     print(person, end='')
-#     print(": [", end='')
-#     for friend in friendMap[person]:
-#         print(friend.name, end='')
-#         print(", ", end='')
-#     print("]")
+for person in friendMap:
+    print(person, end='')
+    print(": [", end='')
+    for friend in friendMap[person]:
+        print("(", end='')
+        print(friend[0], end='')
+        print(", ", end='')
+        print(friend[1], end='')
+        print("), ", end='')
+    print("]")
 
 
