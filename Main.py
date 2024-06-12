@@ -16,28 +16,55 @@ allFriends = []
 # Value: List of all other Friends
 friendMap = {}
 
+def calculateCompatibility(friend1, friend2):
+    total = len(friend1.questions) * 6
+    score = 0
+    
+    # Calculate difference of answers between both people for each question
+    for i in range(len(friend1.questions)):
+        score += abs(friend1.questions[i] - friend2.questions[i])
+        
+    compatibility = round(1 - (score / total), 4)
+    
+    # For debugging
+    # print(friend1, end='')
+    # print(" and ", end='')
+    # print(friend2, end='')
+    # print(": " + str((compatibility * 100)) + "%")
+    
+    return compatibility
+
 # Reading from CSV file into list of Friend objects
 with open("d7fp_test_responses.csv", 'r') as file:
     next(file)
     for line in file:
         response = line.strip().split(',')
-        friend = Friend.Friend(response[CONST_NAME], response[CONST_EMAIL], response[CONST_SCHOOL], [response[CONST_Q1], response[CONST_Q2], response[CONST_Q3], response[CONST_Q4], response[CONST_Q5]])
+        friend = Friend.Friend(response[CONST_NAME], 
+                               response[CONST_EMAIL], 
+                               response[CONST_SCHOOL], 
+                               [int(response[CONST_Q1]), 
+                                int(response[CONST_Q2]), 
+                                int(response[CONST_Q3]), 
+                                int(response[CONST_Q4]), 
+                                int(response[CONST_Q5])])
         allFriends.append(friend)
 
 # Convert allFriends list into a dict
 for person in allFriends:
     allOtherFriends = []
     for friend in allFriends:
-        if person != friend: allOtherFriends.append(friend)
-    friendMap[person] = allOtherFriends
+        if person != friend:
+            compatibility = calculateCompatibility(person, friend)
+            allOtherFriends.append((friend, compatibility))
+    friendMap[person] = allOtherFriends    
 
 # Printing KV pairs in friendMap
-for person in friendMap:
-    print(person, end='')
-    print(": [", end='')
-    for friend in friendMap[person]:
-        print(friend, end='')
-        print(", ", end='')
-    print("]")
+# for person in friendMap:
+#     print(person, end='')
+#     print(": [", end='')
+#     for friend in friendMap[person]:
+#         print(friend.name, end='')
+#         print(", ", end='')
+#     print("]")
 
 
