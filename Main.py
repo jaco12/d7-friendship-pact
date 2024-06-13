@@ -1,4 +1,6 @@
 import Friend
+from matching import Player
+from matching.games import StableRoommates
 
 # CONSTANTS: Each corresponds to an index of the array outputted by line.strip().split(',')
 CONST_NAME = 1
@@ -13,7 +15,7 @@ CONST_Q5 = 8
 # List of all responses, as Friend objects
 allFriends = []
 # Key: Friend
-# Value: List of all other Friends
+# Value: List of all other Friends, converted to Player instances
 friendMap = {}
 
 def calculateCompatibility(friend1, friend2):
@@ -57,18 +59,35 @@ for person in allFriends:
             compatibility = calculateCompatibility(person, friend)
             allOtherFriends.append((friend, compatibility))
     # Reverse sorts by compatibility with person
-    friendMap[person] = sorted(allOtherFriends, reverse=True, key=lambda x: x[1])    
+    friendMap[person] = sorted(allOtherFriends, reverse=True, key=lambda x: x[1])
+    
+    # Convert list of Friends/compatibility to list of Player instances
+    prefList = []
+    for friend in friendMap[person]:
+        prefList.append(Player(str(friend[0])))
+    friendMap[person] = prefList
+            
+
+players = []
+for friend in allFriends:
+    players.append(Player(str(friend.name)))
+for i in range(len(players)):
+    players[i].set_prefs(friendMap[allFriends[i]])
+    
+# game = StableRoommates(players)
+# game.solve()
+
 
 # Printing KV pairs in friendMap
-for person in friendMap:
-    print(person, end='')
-    print(": [", end='')
-    for friend in friendMap[person]:
-        print("(", end='')
-        print(friend[0], end='')
-        print(", ", end='')
-        print(friend[1], end='')
-        print("), ", end='')
-    print("]")
+# for person in friendMap:
+#     print(person, end='')
+#     print(": [", end='')
+#     for friend in friendMap[person]:
+#         print("(", end='')
+#         print(friend[0], end='')
+#         print(", ", end='')
+#         print(friend[1], end='')
+#         print("), ", end='')
+#     print("]", end='\n\n')
 
 
