@@ -3,7 +3,7 @@ from matching import Player
 from matching.games import StableRoommates
 from matching import SingleMatching
 
-# CONSTANTS: Each corresponds to an index of the array outputted by line.strip().split(',')
+# CONSTANTS: Each corresponds to an index of the array outputted by line 33
 CONST_NAME = 1
 CONST_EMAIL = 2
 CONST_SCHOOL = 3
