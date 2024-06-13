@@ -1,4 +1,5 @@
 import sys
+import csv
 from matching import Player
 from matching.games import StableRoommates
 from matching import SingleMatching
@@ -86,6 +87,21 @@ for person in allFriends:
 game = StableRoommates.create_from_dictionary(prefList)
 result = game.solve()
 
+# Writes matches to a CSV file
+header = ['Name', 'Email', 'Friend Name', 'Friend Email', 'Friend School', 'Compatibility Score']
+rows = []
+for each in result:
+    person = each.name
+    friend = result[each].name
+    row = [person.name, person.email, friend.name, friend.email, friend.school, str(calculateCompatibility(person, friend))]
+    rows.append(row)
+
+filename = "d7fp_matches.csv"
+with open(filename, 'w') as output:
+    writer = csv.writer(output)
+    writer.writerow(header)
+    writer.writerows(rows)
+
 # Print matches with compatibility score
-for person in result:
-    print(str(person.name) + " - " + str(result[person].name) + ": Compatibility: " + str(calculateCompatibility(person.name, result[person].name)) + "%")
+# for row in rows:
+#     print(row)
