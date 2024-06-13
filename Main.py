@@ -1,5 +1,4 @@
 import sys
-# import Friend
 from matching import Player
 from matching.games import StableRoommates
 from matching import SingleMatching
