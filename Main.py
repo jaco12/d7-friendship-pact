@@ -7,16 +7,11 @@ from matching import SingleMatching
 CONST_NAME = 1
 CONST_EMAIL = 2
 CONST_SCHOOL = 3
-CONST_Q1 = 4
-CONST_Q2 = 5
-CONST_Q3 = 6
-CONST_Q4 = 7
-CONST_Q5 = 8
 
 # List of all responses, as Friend objects
 allFriends = []
 # Key: Friend
-# Value: List of all other Friends, converted to Player instances
+# Value: List of all other Friends
 prefList = {}
 
 def calculateCompatibility(friend1, friend2):
@@ -27,34 +22,33 @@ def calculateCompatibility(friend1, friend2):
     for i in range(len(friend1.questions)):
         score += abs(friend1.questions[i] - friend2.questions[i])
         
-    compatibility = round((1 - (score / total)) * 100, 4)
-    
-    # For debugging
-    # print(friend1, end='')
-    # print(" and ", end='')
-    # print(friend2, end='')
-    # print(": " + str((compatibility * 100)) + "%")
-    
+    compatibility = round((1 - (score / total)) * 100, 4)    
     return compatibility
 
 # Reading from CSV file into list of Friend objects
 with open("d7fp_test_responses.csv", 'r') as file:
+    # Skip header
     next(file)
     for line in file:
         response = line.strip().split(',')
+        
+        # Create int array of person's answer (1-7) for each question on the survey
+        questionResponses = []
+        for i in range(4, len(response)):
+            questionResponses.append(int(response[i]))
+        
+        # Create new Friend instance
         friend = Friend.Friend(response[CONST_NAME], 
                                response[CONST_EMAIL], 
                                response[CONST_SCHOOL], 
-                               [int(response[CONST_Q1]), 
-                                int(response[CONST_Q2]), 
-                                int(response[CONST_Q3]), 
-                                int(response[CONST_Q4]), 
-                                int(response[CONST_Q5])])
+                               questionResponses)
         allFriends.append(friend)
 
 # Convert allFriends list into a dict
 for person in allFriends:
     allOtherFriends = []
+    
+    # Prefer people from other schools vs. same-school
     for friend in allFriends:
         if person.school != friend.school:
             compatibility = calculateCompatibility(person, friend)
@@ -63,16 +57,20 @@ for person in allFriends:
         if person.school == friend.school and person != friend:
             compatibility = calculateCompatibility(person, friend)
             allOtherFriends.append((friend, compatibility))
+
     # Reverse sorts by compatibility with person
     allOtherFriends.sort(key=lambda x: x[1], reverse=True)
     prefList[person] = allOtherFriends
 
+    # Extracts Friends from tuple to replace prefList value
     for i in range(len(prefList[person])):
         prefList[person][i] = prefList[person][i][0]
     
-
+# https://daffidwilde.github.io/matching/
+# Use matching library to solve stable roommates problem
 game = StableRoommates.create_from_dictionary(prefList)
 result = game.solve()
 
+# Print matches with compatibility score
 for person in result:
     print(str(person.name) + " - " + str(result[person].name) + ": Compatibility: " + str(calculateCompatibility(person.name, result[person].name)) + "%")

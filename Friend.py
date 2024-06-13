@@ -4,7 +4,7 @@ class Friend( object ):
         self.name = name
         self.email = email
         self.school = school
-        # Array of ints--each int is the persons answer (1-7) for each question on the survey
+        # Array of ints--each int is the person's answer (1-7) for each question on the survey
         self.questions = questions 
         
     def __repr__(self):
