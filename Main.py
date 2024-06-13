@@ -16,7 +16,7 @@ from matching.games import StableRoommates
 filename = sys.argv[1]
 
 # List of all responses, as Friend instances
-allFriends = readCSV()
+allFriends = readCSV(filename)
 
 # Key: Friend
 # Value: List of all other Friends, sorted from best to worst compatibility
