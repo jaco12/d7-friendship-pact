@@ -55,9 +55,9 @@ with open(sys.argv[1], 'r') as file:
         
         # Create new Friend instance
         friend = Friend(response[CONST_NAME], 
-                               response[CONST_EMAIL], 
-                               response[CONST_SCHOOL], 
-                               questionResponses)
+                        response[CONST_EMAIL], 
+                        response[CONST_SCHOOL], 
+                        questionResponses)
         allFriends.append(friend)
 
 # Convert allFriends list into a dict
@@ -98,16 +98,13 @@ for each in result:
     diffSchoolRows.append(row) if person.school != friend.school else sameSchoolRows.append(row)
 
 diffSchools_filename = "diff_school_matches.csv"
-sameSchools_filename = "same_school_matches.csv"
 with open(diffSchools_filename, 'w', newline='') as output:
     writer = csv.writer(output)
     writer.writerow(header)
     writer.writerows(diffSchoolRows)
+
+sameSchools_filename = "same_school_matches.csv"
 with open(sameSchools_filename, 'w', newline='') as output:
     writer = csv.writer(output)
     writer.writerow(header)
     writer.writerows(sameSchoolRows)
-
-# Print matches with compatibility score
-# for row in rows:
-#     print(row)
