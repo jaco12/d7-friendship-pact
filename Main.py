@@ -19,7 +19,7 @@ class Friend( object ):
     def __str__(self):
         return f"{self.name}"
 
-# CONSTANTS: Each corresponds to an index of the array outputted by line 33
+# CONSTANTS: Each corresponds to an index of the array outputted by line.strip().split(',')
 CONST_NAME = 1
 CONST_EMAIL = 2
 CONST_SCHOOL = 3
