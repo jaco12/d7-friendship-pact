@@ -87,20 +87,26 @@ for person in allFriends:
 game = StableRoommates.create_from_dictionary(prefList)
 result = game.solve()
 
-# Writes matches to a CSV file
+# Writes matches to two CSV files--one for different-school matches, and one for same-school matches
 header = ['Name', 'Email', 'Friend Name', 'Friend Email', 'Friend School', 'Compatibility Score']
-rows = []
+diffSchoolRows = []
+sameSchoolRows = []
 for each in result:
     person = each.name
     friend = result[each].name
     row = [person.name, person.email, friend.name, friend.email, friend.school, str(calculateCompatibility(person, friend))]
-    rows.append(row)
+    diffSchoolRows.append(row) if person.school != friend.school else sameSchoolRows.append(row)
 
-filename = "d7fp_matches.csv"
-with open(filename, 'w') as output:
+diffSchools_filename = "diff_school_matches.csv"
+sameSchools_filename = "same_school_matches.csv"
+with open(diffSchools_filename, 'w', newline='') as output:
     writer = csv.writer(output)
     writer.writerow(header)
-    writer.writerows(rows)
+    writer.writerows(diffSchoolRows)
+with open(sameSchools_filename, 'w', newline='') as output:
+    writer = csv.writer(output)
+    writer.writerow(header)
+    writer.writerows(sameSchoolRows)
 
 # Print matches with compatibility score
 # for row in rows:
