@@ -1,6 +1,6 @@
 import Friend
 
-def readCSV(filename: str):
+def csvToFriendList(filename: str):
     """Reads the responses CSV file and returns a list of all Friends"""
     # CONSTANTS: Each corresponds to an index of the array outputted by line.strip().split(',')
     CONST_NAME = 1
