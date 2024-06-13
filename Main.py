@@ -1,6 +1,7 @@
 import Friend
 from matching import Player
 from matching.games import StableRoommates
+from matching import SingleMatching
 
 # CONSTANTS: Each corresponds to an index of the array outputted by line.strip().split(',')
 CONST_NAME = 1
@@ -16,7 +17,7 @@ CONST_Q5 = 8
 allFriends = []
 # Key: Friend
 # Value: List of all other Friends, converted to Player instances
-friendMap = {}
+prefList = {}
 
 def calculateCompatibility(friend1, friend2):
     total = len(friend1.questions) * 6
@@ -26,7 +27,7 @@ def calculateCompatibility(friend1, friend2):
     for i in range(len(friend1.questions)):
         score += abs(friend1.questions[i] - friend2.questions[i])
         
-    compatibility = round(1 - (score / total), 4)
+    compatibility = round((1 - (score / total)) * 100, 4)
     
     # For debugging
     # print(friend1, end='')
@@ -55,39 +56,23 @@ with open("d7fp_test_responses.csv", 'r') as file:
 for person in allFriends:
     allOtherFriends = []
     for friend in allFriends:
-        if person != friend:
+        if person.school != friend.school:
+            compatibility = calculateCompatibility(person, friend)
+            allOtherFriends.append((friend, compatibility))
+    for friend in allFriends:
+        if person.school == friend.school and person != friend:
             compatibility = calculateCompatibility(person, friend)
             allOtherFriends.append((friend, compatibility))
     # Reverse sorts by compatibility with person
-    friendMap[person] = sorted(allOtherFriends, reverse=True, key=lambda x: x[1])
+    allOtherFriends.sort(key=lambda x: x[1], reverse=True)
+    prefList[person] = allOtherFriends
+
+    for i in range(len(prefList[person])):
+        prefList[person][i] = prefList[person][i][0]
     
-    # Convert list of Friends/compatibility to list of Player instances
-    prefList = []
-    for friend in friendMap[person]:
-        prefList.append(Player(str(friend[0])))
-    friendMap[person] = prefList
-            
 
-players = []
-for friend in allFriends:
-    players.append(Player(str(friend.name)))
-for i in range(len(players)):
-    players[i].set_prefs(friendMap[allFriends[i]])
-    
-# game = StableRoommates(players)
-# game.solve()
+game = StableRoommates.create_from_dictionary(prefList)
+result = game.solve()
 
-
-# Printing KV pairs in friendMap
-# for person in friendMap:
-#     print(person, end='')
-#     print(": [", end='')
-#     for friend in friendMap[person]:
-#         print("(", end='')
-#         print(friend[0], end='')
-#         print(", ", end='')
-#         print(friend[1], end='')
-#         print("), ", end='')
-#     print("]", end='\n\n')
-
-
+for person in result:
+    print(str(person.name) + " - " + str(result[person].name) + ": Compatibility: " + str(calculateCompatibility(person.name, result[person].name)) + "%")
