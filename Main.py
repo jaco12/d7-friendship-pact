@@ -1,7 +1,23 @@
-import Friend
+import sys
+# import Friend
 from matching import Player
 from matching.games import StableRoommates
 from matching import SingleMatching
+
+class Friend( object ):
+    """Encapsulates information about each survey response."""
+    def __init__(self, name, email, school, questions):
+        self.name = name
+        self.email = email
+        self.school = school
+        # Array of ints--each int is the person's answer (1-7) for each question on the survey
+        self.questions = questions 
+        
+    def __repr__(self):
+        return f"{self.name}"    
+    
+    def __str__(self):
+        return f"{self.name}"
 
 # CONSTANTS: Each corresponds to an index of the array outputted by line 33
 CONST_NAME = 1
@@ -15,18 +31,18 @@ allFriends = []
 prefList = {}
 
 def calculateCompatibility(friend1, friend2):
+    # Calculate difference of answers between both people for each question
     total = len(friend1.questions) * 6
     score = 0
     
-    # Calculate difference of answers between both people for each question
     for i in range(len(friend1.questions)):
         score += abs(friend1.questions[i] - friend2.questions[i])
-        
+
     compatibility = round((1 - (score / total)) * 100, 4)    
     return compatibility
 
 # Reading from CSV file into list of Friend objects
-with open("d7fp_test_responses.csv", 'r') as file:
+with open(sys.argv[1], 'r') as file:
     # Skip header
     next(file)
     for line in file:
@@ -38,7 +54,7 @@ with open("d7fp_test_responses.csv", 'r') as file:
             questionResponses.append(int(response[i]))
         
         # Create new Friend instance
-        friend = Friend.Friend(response[CONST_NAME], 
+        friend = Friend(response[CONST_NAME], 
                                response[CONST_EMAIL], 
                                response[CONST_SCHOOL], 
                                questionResponses)
