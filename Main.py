@@ -12,9 +12,11 @@ from matching.games import StableRoommates
     1. Convert ints in questionResponses to Question instances
     2. Make question weight CSV file an optional CLI argument
 """
+# Takes in CLI arg for CSV input
+filename = sys.argv[1]
 
 # List of all responses, as Friend instances
-allFriends = readCSV(sys.argv[1])
+allFriends = readCSV()
 
 # Key: Friend
 # Value: List of all other Friends, sorted from best to worst compatibility
