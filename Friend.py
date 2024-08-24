@@ -1,9 +1,10 @@
 class Friend(object):
     """Encapsulates information about each survey response."""
-    def __init__(self, name, email, school, questions):
+    def __init__(self, name, school, email, socials, questions):
         self.name = name
-        self.email = email
         self.school = school
+        self.email = email
+        self.socials = socials
         # Array of ints--each int is the person's answer (1-7) for each question on the survey
         self.questions = questions 
         

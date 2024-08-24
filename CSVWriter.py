@@ -3,7 +3,7 @@ from CompatibilityCalculator import *
 
 def writeToCSV(result: dict, diffSchools_filename: str, sameSchools_filename: str):
     """Writes matches to two CSV files--one for different-school matches, and one for same-school matches."""
-    header = ['Name', 'Email', 'Friend Name', 'Friend Email', 'Friend School', 'Compatibility Score']
+    header = ['Name', 'Email', 'Friend Name', 'Friend Email', 'Friend School', 'Friend Socials', 'Compatibility Score']
     diffSchoolRows = []
     sameSchoolRows = []
 
@@ -12,7 +12,7 @@ def writeToCSV(result: dict, diffSchools_filename: str, sameSchools_filename: st
         friend = result[each].name
         compatibility = calculateCompatibility(person, friend)
         
-        row = [person.name, person.email, friend.name, friend.email, friend.school, compatibilityToStr(compatibility)]
+        row = [person.name, person.email, friend.name, friend.email, friend.school, friend.socials, compatibilityToStr(compatibility)]
         diffSchoolRows.append(row) if person.school != friend.school else sameSchoolRows.append(row)
 
     with open(diffSchools_filename, 'w', newline='') as output:
