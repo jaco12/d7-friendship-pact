@@ -35,4 +35,4 @@ prefList = createPreferenceList(allFriends)
 game = StableRoommates.create_from_dictionary(prefList)
 result = game.solve()
 
-writeToCSV(result, "diff_school_matches.csv", "same_school_matches.csv")
+writeToCSV(result, "diff_school_matches.csv", "same_school_matches.csv", "email_list.csv")

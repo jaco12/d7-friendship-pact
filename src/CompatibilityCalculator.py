@@ -4,10 +4,8 @@ def calculateCompatibility(friend1: Friend, friend2: Friend):
     """Calculate difference of answers between both people for each question."""
     total = len(friend1.questions) * 6
     score = 0
-    
-    
+        
     for i in range(len(friend1.questions)):
-        # print(i)
         score += abs(friend1.questions[i] - friend2.questions[i])
 
     compatibility = round((1 - (score / total)) * 100, 4)    
