@@ -5,7 +5,7 @@ Uses the <a href="https://daffidwilde.github.io/matching/">matching library</a> 
 
 <br>
 
-How to use (very easy lol):
+How to use (very easy!):
 ```
 python Main.py example_input.csv
 ```
