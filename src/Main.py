@@ -19,7 +19,7 @@ from matching.games import StableRoommates
         Alternative methods:
             - Change academic major questions to True/False
             - Add weights to all questions and decrease the weights for the academic majors
-            - Keep the current way, because having an inflated compatbility score looks better, otherwise the score would be generally much lower
+            - Keep the current way, because having an inflated compatbility score looks better, otherwise the score would be generally much lower [CHOSE THIS OPTION]
 """
 
 # Takes in CLI arg for CSV input and converts to list of Friend instances
