@@ -1,0 +1,5 @@
+Name,Email,Friend Name,Friend Email,Friend School,Friend Socials,Compatibility Score
+Liam Rodriguez,liam.rodri21@example.com,Sofia Bennett,sofia.bennett17@example.com,UVA,2,91.67%
+Naomi Patel,naomi.patel33@example.com,Ethan Kim,ethan.kim88@example.com,UVA,5,83.33%
+Ethan Kim,ethan.kim88@example.com,Naomi Patel,naomi.patel33@example.com,UVA,1,83.33%
+Sofia Bennett,sofia.bennett17@example.com,Liam Rodriguez,liam.rodri21@example.com,UVA,7,91.67%
