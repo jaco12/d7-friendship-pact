@@ -12,7 +12,7 @@ where `test-files/d7fp_test_responses.csv` would be the path of your actual CSV 
 
 _Note: the test .csv file uses fake names and emails._
 
-This program was paired with this <a href="https://script.google.com/d/1CPkEmwWxN7RbDC-Ff98mPNnoHGyC-wo8JB3xXhbvZ5W1uTiVIJRXyA5S/edit?usp=sharing">Google Apps Script</a> that sent automated emails to each participant with all the relevant details of their pairing.
+This program was paired with this <a href="https://script.google.com/d/1CPkEmwWxN7RbDC-Ff98mPNnoHGyC-wo8JB3xXhbvZ5W1uTiVIJRXyA5S/edit?usp=sharing">Google Apps Script</a> that sent automated emails to each participant with all the relevant details of their pairing, using the .csv file as a Google Sheet.
 
 ## Potential Improvements
 
