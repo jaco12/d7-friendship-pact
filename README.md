@@ -3,11 +3,12 @@ An algorithm-based matchmaker inspired by the Marriage Pact. Created for <a href
 
 Uses the <a href="https://daffidwilde.github.io/matching/">matching library</a> to solve the <a href="https://en.wikipedia.org/wiki/Stable_roommates_problem">stable-roommate problem</a> and create pairs of compatible friends.
 
-## How to use (very easy!):
+## Testing and Usage:
+
 ```
-python Main.py example_input.csv
+python src/Main.py test-files/d7fp_test_responses.csv
 ```
-where _example_input_ is the path of your CSV file. Yay!
+where `test-files/d7fp_test_responses.csv` would be the path of your actual CSV file. Yay! You did it!
 
 <br>
 
